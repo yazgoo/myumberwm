@@ -1,5 +1,5 @@
 [package]
-name = "myumerwm"
+name = "myumberwm"
 version = "0.0.1"
 authors = ["yazgoo <yazgoo@gmail.com>"]
 edition = "2018"
@@ -9,6 +9,6 @@ readme = "README.md"
 homepage = "https://github.com/yazgoo/myumberwm"
 repository = "https://github.com/yazgoo/myumberwm"
 keywords = ["wm", "x11", "terminal"]
-categories = ["GUI"]
+categories = ["gui"]
 [dependencies]
 umberwm = "0.0.1"
