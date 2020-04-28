@@ -1,5 +1,14 @@
 [package]
 name = "myumerwm"
 version = "0.0.1"
+authors = ["yazgoo <yazgoo@gmail.com>"]
+edition = "2018"
+license = "MIT"
+description = "instance of minimalist X11 window manager"
+readme = "README.md"
+homepage = "https://github.com/yazgoo/myumberwm"
+repository = "https://github.com/yazgoo/myumberwm"
+keywords = ["wm", "x11", "terminal"]
+categories = ["GUI"]
 [dependencies]
 umberwm = "0.0.1"
