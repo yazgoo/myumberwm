@@ -37,7 +37,7 @@ version = "2.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
-name = "myumerwm"
+name = "myumberwm"
 version = "0.0.1"
 dependencies = [
  "umberwm 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
