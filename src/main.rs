@@ -1,9 +1,11 @@
 extern crate umberwm;
 
 use std::process::Command;
-use umberwm::{Actions, Conf, umberwm, WindowBorder, DisplayBorder, Key, CustomAction, Meta};
+use umberwm::{Actions, Conf, umberwm, WindowBorder, DisplayBorder, Key, CustomAction, Meta, EventsCallbacks};
 use std::env;
 use std::collections::HashMap;
+use std::thread;
+use std::path;
 
 fn main() {
 
@@ -31,8 +33,16 @@ fn main() {
         /* mapping between key names (must be a name in xmodmap -pke) and user-defined actions */
         custom_actions: 
             vec![
-            ("r".to_string(), Box::new(|| { let _ = Command::new("rofi").arg("-show").arg("run").spawn();}) as CustomAction),
-            ("t".to_string(), Box::new(|| { let _ = Command::new("kitty").spawn();})),
+            ("r".to_string(), Box::new(|| { 
+                thread::spawn(
+                    move || {let _ = Command::new("rofi").arg("-show").arg("run").status();}
+                );
+            }) as CustomAction),
+            ("t".to_string(), Box::new(|| {
+                thread::spawn(
+                    move || {let _= Command::new("kitty").status();}
+                );
+            })),
             ("q".to_string(), Box::new(|| std::process::exit(0))),
             ].into_iter().collect::<HashMap<Key, CustomAction>>(),
         /* mapping between key names (must be a name in xmodmap -pke) and window manager specific actions */
@@ -48,6 +58,22 @@ fn main() {
         /* will leave alone windows with this _NET_WM_WINDOW_TYPE */
         auto_float_types: vec!["notification", "toolbar", "splash", "dialog", "popup_menu", "utility", "tooltip", "dock"]
             .into_iter().map( |x| x.to_string() ).collect(),
+        /* those are user custom callbacks */
+        events_callbacks: EventsCallbacks {
+            /* when we change a workspace */
+            on_change_workspace: Some(Box::new(|workspace| { 
+                thread::spawn(
+                    move || {
+                        /* set the wallpaper using feh */
+                        let background_path = format!("{}/Pictures/wallpapers/umberwm_{}.jpg", 
+                            env::var("HOME").unwrap(), workspace);
+                        if path::Path::new(&background_path).exists() {
+                            let _ = Command::new("feh").arg("--bg-scale").arg(background_path).status();
+                        }
+                    }
+                );
+            })) 
+        }
     }).run();
 
 }
