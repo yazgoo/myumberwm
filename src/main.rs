@@ -64,11 +64,11 @@ fn main() {
             on_change_workspace: Some(Box::new(|workspace| { 
                 thread::spawn(
                     move || {
-                        /* set the wallpaper using feh */
+                        /* set the wallpaper using nitrogen */
                         let background_path = format!("{}/Pictures/wallpapers/umberwm_{}.jpg", 
                             env::var("HOME").unwrap(), workspace);
                         if path::Path::new(&background_path).exists() {
-                            let _ = Command::new("feh").arg("--bg-scale").arg(background_path).status();
+                            let _ = Command::new("nitrogen").arg("--set-scaled").arg(background_path).status();
                         }
                     }
                 );
