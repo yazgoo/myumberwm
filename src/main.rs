@@ -40,7 +40,7 @@ fn main() {
             }) as CustomAction),
             ("t".to_string(), Box::new(|| {
                 thread::spawn(
-                    move || {let _= Command::new("kitty").status();}
+                    move || {let _= Command::new("bash").arg("t").status();}
                 );
             })),
             ("q".to_string(), Box::new(|| std::process::exit(0))),
