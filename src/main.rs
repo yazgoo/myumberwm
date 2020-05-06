@@ -38,9 +38,19 @@ fn main() {
                     move || {let _ = Command::new("rofi").arg("-show").arg("run").status();}
                 );
             }) as CustomAction),
-            ("t".to_string(), Box::new(|| {
+            ("Return".to_string(), Box::new(|| {
                 thread::spawn(
-                    move || {let _= Command::new("bash").arg("t").status();}
+                    move || {let _= Command::new("bash").arg("t").status();} /* launch my favorite terminal emulator */
+                );
+            })),
+            ("s".to_string(), Box::new(|| {
+                thread::spawn(
+                    move || {let _= Command::new("bash").arg("alsaterm").status();} /* launch alsamixer in a terminal */
+                );
+            })),
+            ("n".to_string(), Box::new(|| {
+                thread::spawn(
+                    move || {let _= Command::new("xcalib").arg("-i").arg("-a").status();}
                 );
             })),
             ("q".to_string(), Box::new(|| std::process::exit(0))),
@@ -53,7 +63,7 @@ fn main() {
             ("f".to_string(), Actions::ChangeLayout)].into_iter().collect::<HashMap<Key, Actions>>(),
         /* won't tile windows with this WM_CLASS */
         float_classes: vec!["screenkey", "audacious", "Download", "dropbox", "file_progress", "file-roller", "gimp",
-                          "Komodo_confirm_repl", "Komodo_find2", "pidgin", "skype", "Transmission", "Update", "Xephyr", "obs"]
+                          "Komodo_confirm_repl", "Komodo_find2", "pidgin", "skype", "Transmission", "Update", "Xephyr", "obs", "rofi", "zoom"]
                               .into_iter().map( |x| x.to_string() ).collect(),
         /* will leave alone windows with this _NET_WM_WINDOW_TYPE */
         auto_float_types: vec!["notification", "toolbar", "splash", "dialog", "popup_menu", "utility", "tooltip", "dock"]
