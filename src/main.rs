@@ -71,14 +71,14 @@ fn main() {
         /* those are user custom callbacks */
         events_callbacks: EventsCallbacks {
             /* when we change a workspace */
-            on_change_workspace: Some(Box::new(|workspace| { 
+            on_change_workspace: Some(Box::new(|workspace, display| { 
                 thread::spawn(
                     move || {
                         /* set the wallpaper using nitrogen */
                         let background_path = format!("{}/Pictures/wallpapers/umberwm_{}.jpg", 
                             env::var("HOME").unwrap(), workspace);
                         if path::Path::new(&background_path).exists() {
-                            let _ = Command::new("nitrogen").arg("--set-scaled").arg(background_path).status();
+                            let _ = Command::new("nitrogen").arg("--set-scaled").arg(format!("--head={}", display)).arg(background_path).status();
                         }
                     }
                 );
