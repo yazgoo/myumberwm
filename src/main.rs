@@ -53,6 +53,9 @@ fn main() {
                     move || {let _= Command::new("xcalib").arg("-i").arg("-a").status();}
                 );
             })),
+            ("m".to_string(), Box::new(|| {
+                let _= Command::new("autorandr").arg("--change").status();
+            })),
             ("q".to_string(), Box::new(|| std::process::exit(0))),
             ].into_iter().collect::<HashMap<Key, CustomAction>>(),
         /* mapping between key names (must be a name in xmodmap -pke) and window manager specific actions */
