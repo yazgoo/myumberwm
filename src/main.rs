@@ -15,16 +15,25 @@ fn main() {
         /* the main key used to detect WM events */
         meta: if args.len() > 1 && args[1] == "mod4" { Meta::Mod4 } else { Meta::Mod1 },
         /* borders defining space the WM wont tile windows to (usefull when using task bars) */
-        display_border: DisplayBorder {
-            left: 0,
-            right: 0,
-            top: 20,
-            bottom: 0,
-        },
+        display_borders: vec![
+            DisplayBorder {
+                left: 0,
+                right: 0,
+                top: 20,
+                bottom: 0,
+                /* gap between windows */
+                gap: 10,
+            },
+            DisplayBorder {
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+                gap: 0,
+        }
+        ],
         border: WindowBorder {
             width: 1,
-            /* gap between windows */
-            gap: 10,
             focus_color: 0x906cff,
             normal_color: 0x000000,
         },
