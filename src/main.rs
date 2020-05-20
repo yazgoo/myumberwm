@@ -38,7 +38,9 @@ fn main() {
             normal_color: 0x000000,
         },
         /* key names of the workspaces (must be a name in xmodmap -pke), per displays */
-        workspaces_names: vec![vec![ "a".to_string(), "u".to_string(), "i".to_string()], vec!["o".to_string(), "p".to_string() ]],
+        workspaces_names: vec![
+            vec![ "a".to_string(), "u".to_string(), "i".to_string()],
+            vec!["b".to_string(), "eacute".to_string(), "o".to_string(), "p".to_string() ]],
         /* mapping between key names (must be a name in xmodmap -pke) and user-defined actions */
         custom_actions: 
             vec![
