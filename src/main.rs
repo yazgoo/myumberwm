@@ -77,7 +77,7 @@ fn main() {
             ("f".to_string(), Actions::ChangeLayout)].into_iter().collect::<HashMap<Key, Actions>>(),
         /* won't tile windows with this WM_CLASS */
         float_classes: vec!["screenkey", "audacious", "Download", "dropbox", "file_progress", "file-roller", "gimp",
-                          "Komodo_confirm_repl", "Komodo_find2", "pidgin", "skype", "Transmission", "Update", "Xephyr", "obs", "rofi", "zoom"]
+                          "Komodo_confirm_repl", "Komodo_find2", "pidgin", "skype", "Transmission", "Update", "Xephyr", "obs", "rofi", "xscreensaver"]
                               .into_iter().map( |x| x.to_string() ).collect(),
         /* will leave alone windows with this _NET_WM_WINDOW_TYPE */
         auto_float_types: vec!["notification", "toolbar", "splash", "dialog", "popup_menu", "utility", "tooltip", "dock"]
