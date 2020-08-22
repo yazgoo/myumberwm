@@ -59,9 +59,19 @@ fn main() {
                     move || {let _= Command::new("bash").arg("alsaterm").status();} /* launch alsamixer in a terminal */
                 );
             })),
+            ("l".to_string(), Box::new(|| {
+                thread::spawn(
+                    move || {let _= Command::new("lxlock");}
+                );
+            })),
             ("n".to_string(), Box::new(|| {
                 thread::spawn(
                     move || {let _= Command::new("xcalib").arg("-i").arg("-a").status();}
+                );
+            })),
+            ("x".to_string(), Box::new(|| {
+                thread::spawn(
+                    move || {let _= Command::new("t").arg("-e").arg("quickmarks").status();}
                 );
             })),
             ("m".to_string(), Box::new(|| {
