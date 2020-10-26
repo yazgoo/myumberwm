@@ -71,7 +71,7 @@ fn main() {
             })),
             ("x".to_string(), Box::new(|| {
                 thread::spawn(
-                    move || {let _= Command::new("t").arg("-e").arg("quickmarks").status();}
+                    move || {let _= Command::new("t").arg("--class").arg("quickmarks").arg("--position").arg("0").arg("18").arg("--dimensions").arg("100").arg("40").arg("--config-file").arg("/home/yazgoo/.config/alacritty/alacritty_white.yml").arg("-e").arg("quickmarks").status();}
                 );
             })),
             ("m".to_string(), Box::new(|| {
@@ -86,8 +86,8 @@ fn main() {
             ("w".to_string(), Actions::CloseWindow),
             ("f".to_string(), Actions::ChangeLayout)].into_iter().collect::<HashMap<Key, Actions>>(),
         /* won't tile windows with this WM_CLASS */
-        float_classes: vec!["confirm", "dialog", "error", "splash", "toolbar", "screenkey", "audacious", "Download", "dropbox", "file_progress", "file-roller", "gimp",
-                          "Komodo_confirm_repl", "Komodo_find2", "pidgin", "skype", "Transmission", "Update", "Xephyr", "obs", "rofi", "xscreensaver"]
+        float_classes: vec!["confirm", "dialog", "error", "splash", "toolbar", "screenkey", "audacious", "Download", "dropbox", "file_progress", "file-roller",
+                          "Komodo_confirm_repl", "Komodo_find2", "pidgin", "skype", "Transmission", "Update", "Xephyr", "obs", "rofi", "xscreensaver", "quickmarks"]
                               .into_iter().map( |x| x.to_string() ).collect(),
         /* those are user custom callbacks */
         events_callbacks: EventsCallbacks {
