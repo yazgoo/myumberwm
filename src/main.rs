@@ -84,7 +84,8 @@ fn main() {
             vec![
             ("space".to_string(), Actions::SwitchWindow),
             ("w".to_string(), Actions::CloseWindow),
-            ("f".to_string(), Actions::ChangeLayout)].into_iter().collect::<HashMap<Key, Actions>>(),
+            ("f".to_string(), Actions::ChangeLayout),
+            ("g".to_owned(), Actions::ToggleGap)].into_iter().collect::<HashMap<Key, Actions>>(),
         /* won't tile windows with this WM_CLASS */
         float_classes: vec!["confirm", "dialog", "error", "splash", "toolbar", "screenkey", "audacious", "Download", "dropbox", "file_progress", "file-roller",
                           "Komodo_confirm_repl", "Komodo_find2", "pidgin", "skype", "Transmission", "Update", "Xephyr", "obs", "rofi", "xscreensaver", "quickmarks"]
@@ -104,7 +105,8 @@ fn main() {
                     }
                 );
             })) 
-        }
+        },
+        with_gap: true,
     }).run();
 
 }
