@@ -87,8 +87,10 @@ fn main() {
             ("f".to_string(), Actions::ChangeLayout),
             ("g".to_owned(), Actions::ToggleGap)].into_iter().collect::<HashMap<Key, Actions>>(),
         /* won't tile windows with this WM_CLASS */
+        ignore_classes: vec!["xscreensaver", "Discover-overlay"]
+            .into_iter().map( |x| x.to_string() ).collect(),
         float_classes: vec!["confirm", "dialog", "error", "splash", "toolbar", "screenkey", "audacious", "Download", "dropbox", "file_progress", "file-roller",
-                          "Komodo_confirm_repl", "Komodo_find2", "pidgin", "skype", "Transmission", "Update", "Xephyr", "obs", "rofi", "xscreensaver", "quickmarks"]
+                          "Komodo_confirm_repl", "Komodo_find2", "pidgin", "skype", "Transmission", "Update", "Xephyr", "obs", "rofi", "xscreensaver", "quickmarks", "discover-overlay", "Discover-overlay"]
                               .into_iter().map( |x| x.to_string() ).collect(),
         /* those are user custom callbacks */
         events_callbacks: EventsCallbacks {

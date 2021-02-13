@@ -78,9 +78,9 @@ dependencies = [
 
 [[package]]
 name = "umberwm"
-version = "0.0.17"
+version = "0.0.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4e48bdf00984c840c19cc57b351cc040902375cbe9a06daf547a2a4cb6401234"
+checksum = "02e56c5f6c7ef6c397a9e8955feb7446edaee1bbea205aad1dc574c8f2db9954"
 dependencies = [
  "regex",
  "xcb",
