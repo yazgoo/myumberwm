@@ -1,25 +1,27 @@
 extern crate umberwm;
 
-use std::process::Command;
-use umberwm::{Actions, Conf, umberwm, WindowBorder, DisplayBorder, Key, CustomAction, Meta, EventsCallbacks};
 use std::env;
-use std::collections::HashMap;
-use std::thread;
 use std::path;
+use std::process::Command;
+use std::thread;
+use umberwm::{
+    umberwm, Actions, Conf, CustomAction, DisplayBorder, EventsCallbacks, Key, Keybind, WindowBorder,
+    MOD_MASK_1, MOD_MASK_4, MOD_MASK_CONTROL, MOD_MASK_SHIFT,
+};
 
 fn main() {
-
     let args: Vec<String> = env::args().collect();
+    let meta = if args.len() > 1 && args[1] == "mod4" { MOD_MASK_4 } else { MOD_MASK_1 };
 
     umberwm(Conf {
         /* the main key used to detect WM events */
-        meta: if args.len() > 1 && args[1] == "mod4" { Meta::Mod4 } else { Meta::Mod1 },
+        meta: meta,
         /* borders defining space the WM wont tile windows to (usefull when using task bars) */
         display_borders: vec![
             DisplayBorder {
                 left: 0,
                 right: 0,
-                top: 20,
+                top: 16,
                 bottom: 0,
                 /* gap between windows */
                 gap: 10,
@@ -44,50 +46,51 @@ fn main() {
         /* mapping between key names (must be a name in xmodmap -pke) and user-defined actions */
         custom_actions: 
             vec![
-            ("r".to_string(), Box::new(|| { 
+            (Keybind::new(meta, "r"), Box::new(|| { 
                 thread::spawn(
                     move || {let _ = Command::new("rofi").arg("-show").arg("run").status();}
                 );
             }) as CustomAction),
-            ("Return".to_string(), Box::new(|| {
+            (Keybind::new(meta, "Return"), Box::new(|| {
                 thread::spawn(
                     move || {let _= Command::new("bash").arg("t").status();} /* launch my favorite terminal emulator */
                 );
             })),
-            ("s".to_string(), Box::new(|| {
+            (Keybind::new(meta, "s"), Box::new(|| {
                 thread::spawn(
                     move || {let _= Command::new("bash").arg("alsaterm").status();} /* launch alsamixer in a terminal */
                 );
             })),
-            ("l".to_string(), Box::new(|| {
+            (Keybind::new(meta, "l"), Box::new(|| {
                 thread::spawn(
                     move || {let _= Command::new("lxlock");}
                 );
             })),
-            ("n".to_string(), Box::new(|| {
+            (Keybind::new(meta, "n"), Box::new(|| {
                 thread::spawn(
                     move || {let _= Command::new("xcalib").arg("-i").arg("-a").status();}
                 );
             })),
-            ("x".to_string(), Box::new(|| {
+            (Keybind::new(meta, "x"), Box::new(|| {
                 thread::spawn(
-                    move || {let _= Command::new("t").arg("--class").arg("quickmarks").arg("--position").arg("0").arg("18").arg("--dimensions").arg("100").arg("40").arg("--config-file").arg("/home/yazgoo/.config/alacritty/alacritty_white.yml").arg("-e").arg("quickmarks").status();}
+                    move || {let _= Command::new("t").arg("--class").arg("quickmarks").arg("--config-file").arg("/home/yazgoo/.config/alacritty/alacritty_white.yml").arg("-e").arg("quickmarks").status();}
                 );
             })),
-            ("m".to_string(), Box::new(|| {
+            (Keybind::new(meta, "m"), Box::new(|| {
                 let _= Command::new("autorandr").arg("--change").status();
             })),
-            ("q".to_string(), Box::new(|| std::process::exit(0))),
-            ].into_iter().collect::<HashMap<Key, CustomAction>>(),
+            (Keybind::new(meta, "q"), Box::new(|| std::process::exit(0))),
+            ].into_iter().collect(),
         /* mapping between key names (must be a name in xmodmap -pke) and window manager specific actions */
         wm_actions: 
             vec![
-            ("space".to_string(), Actions::SwitchWindow),
-            ("w".to_string(), Actions::CloseWindow),
-            ("f".to_string(), Actions::ChangeLayout),
-            ("g".to_owned(), Actions::ToggleGap)].into_iter().collect::<HashMap<Key, Actions>>(),
+            (Keybind::new(meta, "space"), Actions::SwitchWindow),
+            (Keybind::new(meta, "w"), Actions::CloseWindow),
+            (Keybind::new(meta, "f"), Actions::ChangeLayout),
+            (Keybind::new(meta, "d"), Actions::SerializeAndQuit),
+            (Keybind::new(meta, "g"), Actions::ToggleGap)].into_iter().collect(),
         /* won't tile windows with this WM_CLASS */
-        ignore_classes: vec!["xscreensaver", "Discover-overlay"]
+        ignore_classes: vec!["xscreensaver", "Discover-overlay", "compton", "xsecurelock"]
             .into_iter().map( |x| x.to_string() ).collect(),
         float_classes: vec!["confirm", "dialog", "error", "splash", "toolbar", "screenkey", "audacious", "Download", "dropbox", "file_progress", "file-roller",
                           "Komodo_confirm_repl", "Komodo_find2", "pidgin", "skype", "Transmission", "Update", "Xephyr", "obs", "rofi", "xscreensaver", "quickmarks", "discover-overlay", "Discover-overlay"]
@@ -108,7 +111,6 @@ fn main() {
                 );
             })) 
         },
-        with_gap: true,
+        with_gap: false,
     }).run();
-
 }
