@@ -4,9 +4,10 @@ use std::env;
 use std::path;
 use std::process::Command;
 use std::thread;
+use std::collections::HashMap;
 use umberwm::{
-    umberwm, Actions, Conf, CustomAction, DisplayBorder, EventsCallbacks, Key, Keybind, WindowBorder,
-    MOD_MASK_1, MOD_MASK_4, MOD_MASK_CONTROL, MOD_MASK_SHIFT,
+    umberwm, Actions, SerializableConf, Conf, CustomAction, DisplayBorder, EventsCallbacks, Keybind, WindowBorder,
+    MOD_MASK_1, MOD_MASK_4
 };
 
 fn main() {
@@ -14,6 +15,7 @@ fn main() {
     let meta = if args.len() > 1 && args[1] == "mod4" { MOD_MASK_4 } else { MOD_MASK_1 };
 
     umberwm(Conf {
+        serializable: SerializableConf {
         /* the main key used to detect WM events */
         meta: meta,
         /* borders defining space the WM wont tile windows to (usefull when using task bars) */
@@ -43,6 +45,42 @@ fn main() {
         workspaces_names: vec![
             vec![ "a".to_string(), "u".to_string(), "i".to_string()],
             vec!["b".to_string(), "eacute".to_string(), "o".to_string(), "p".to_string() ]],
+        /* mapping between key names (must be a name in xmodmap -pke) and window manager specific actions */
+        wm_actions: 
+            vec![
+            (Keybind::new(meta, "space"), Actions::SwitchWindow),
+            (Keybind::new(meta, "w"), Actions::CloseWindow),
+            (Keybind::new(meta, "q"), Actions::Quit),
+            (Keybind::new(meta, "f"), Actions::ChangeLayout),
+            (Keybind::new(meta, "d"), Actions::SerializeAndQuit),
+            (Keybind::new(meta, "g"), Actions::ToggleGap)].into_iter().collect(),
+        /* won't tile windows with this WM_CLASS */
+        ignore_classes: vec!["xscreensaver", "compton", "xsecurelock", "slock"]
+            .into_iter().map( |x| x.to_string() ).collect(),
+        float_classes: vec!["confirm", "dialog", "error", "splash", "toolbar", "screenkey", "audacious", "Download", "dropbox", "file_progress", "file-roller",
+                          "Komodo_confirm_repl", "Komodo_find2", "pidgin", "skype", "Transmission", "Update", "Xephyr", "obs", "rofi", "xscreensaver", "quickmarks", "discover-overlay"]
+                              .into_iter().map( |x| x.to_string() ).collect(),
+        overlay_classes: vec!["discover-overlay"].into_iter().map( |x| x.to_string() ).collect(),
+        /* those are user custom callbacks */
+        with_gap: false,
+        command_callbacks: HashMap::new(),
+        custom_commands: HashMap::new(),
+    },
+        events_callbacks: EventsCallbacks {
+            /* when we change a workspace */
+            on_change_workspace: Some(Box::new(|workspace, display| { 
+                thread::spawn(
+                    move || {
+                        /* set the wallpaper using nitrogen */
+                        let background_path = format!("{}/Pictures/wallpapers/umberwm_{}.jpg", 
+                            env::var("HOME").unwrap(), workspace);
+                        if path::Path::new(&background_path).exists() {
+                            let _ = Command::new("nitrogen").arg("--set-scaled").arg(format!("--head={}", display)).arg(background_path).status();
+                        }
+                    }
+                );
+            })) 
+        },
         /* mapping between key names (must be a name in xmodmap -pke) and user-defined actions */
         custom_actions: 
             vec![
@@ -79,38 +117,6 @@ fn main() {
             (Keybind::new(meta, "m"), Box::new(|| {
                 let _= Command::new("autorandr").arg("--change").status();
             })),
-            (Keybind::new(meta, "q"), Box::new(|| std::process::exit(0))),
             ].into_iter().collect(),
-        /* mapping between key names (must be a name in xmodmap -pke) and window manager specific actions */
-        wm_actions: 
-            vec![
-            (Keybind::new(meta, "space"), Actions::SwitchWindow),
-            (Keybind::new(meta, "w"), Actions::CloseWindow),
-            (Keybind::new(meta, "f"), Actions::ChangeLayout),
-            (Keybind::new(meta, "d"), Actions::SerializeAndQuit),
-            (Keybind::new(meta, "g"), Actions::ToggleGap)].into_iter().collect(),
-        /* won't tile windows with this WM_CLASS */
-        ignore_classes: vec!["xscreensaver", "Discover-overlay", "compton", "xsecurelock"]
-            .into_iter().map( |x| x.to_string() ).collect(),
-        float_classes: vec!["confirm", "dialog", "error", "splash", "toolbar", "screenkey", "audacious", "Download", "dropbox", "file_progress", "file-roller",
-                          "Komodo_confirm_repl", "Komodo_find2", "pidgin", "skype", "Transmission", "Update", "Xephyr", "obs", "rofi", "xscreensaver", "quickmarks", "discover-overlay", "Discover-overlay"]
-                              .into_iter().map( |x| x.to_string() ).collect(),
-        /* those are user custom callbacks */
-        events_callbacks: EventsCallbacks {
-            /* when we change a workspace */
-            on_change_workspace: Some(Box::new(|workspace, display| { 
-                thread::spawn(
-                    move || {
-                        /* set the wallpaper using nitrogen */
-                        let background_path = format!("{}/Pictures/wallpapers/umberwm_{}.jpg", 
-                            env::var("HOME").unwrap(), workspace);
-                        if path::Path::new(&background_path).exists() {
-                            let _ = Command::new("nitrogen").arg("--set-scaled").arg(format!("--head={}", display)).arg(background_path).status();
-                        }
-                    }
-                );
-            })) 
-        },
-        with_gap: false,
     }).run();
 }
