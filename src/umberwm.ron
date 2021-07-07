@@ -1,0 +1,109 @@
+(
+    /* the main key used to detect WM events */
+    meta: 64,
+    border: (
+        width: 1,
+        focus_color: 9465087,
+        normal_color: 0,
+    ),
+    /* borders defining space the WM wont tile windows to (usefull when using task bars) */
+    display_borders: [
+        (
+            left: 0,
+            right: 0,
+            bottom: 0,
+            top: 16,
+            gap: 10,
+        ),
+        (
+            left: 0,
+            right: 0,
+            bottom: 0,
+            top: 0,
+            gap: 0,
+        ),
+    ],
+    /* key names of the workspaces (must be a name in xmodmap -pke), per displays */
+    workspaces_names: [
+        [
+            "a",
+            "u",
+            "i",
+        ],
+        [
+            "b",
+            "eacute",
+            "o",
+            "p",
+        ],
+    ],
+    /* mapping between key names (must be a name in xmodmap -pke) and window manager specific actions */
+    wm_actions: {
+        (
+            mod_mask: 64,
+            key: "w",
+        ): CloseWindow,
+        (
+            mod_mask: 64,
+            key: "space",
+        ): SwitchWindow,
+        (
+            mod_mask: 64,
+            key: "g",
+        ): ToggleGap,
+        (
+            mod_mask: 64,
+            key: "d",
+        ): SerializeAndQuit,
+        (
+            mod_mask: 64,
+            key: "q",
+        ): Quit,
+        (
+            mod_mask: 64,
+            key: "f",
+        ): ChangeLayout,
+    },
+    /* will ignore windows with this WM_CLASS */
+    ignore_classes: [
+        "xscreensaver",
+        "compton",
+        "xsecurelock",
+        "slock",
+    ],
+    /* won't tile windows with this WM_CLASS */
+    float_classes: [
+        "confirm",
+        "dialog",
+        "error",
+        "splash",
+        "toolbar",
+        "screenkey",
+        "audacious",
+        "Download",
+        "dropbox",
+        "file_progress",
+        "file-roller",
+        "Komodo_confirm_repl",
+        "Komodo_find2",
+        "pidgin",
+        "skype",
+        "Transmission",
+        "Update",
+        "Xephyr",
+        "obs",
+        "rofi",
+        "xscreensaver",
+        "quickmarks",
+        "discover-overlay",
+    ],
+    /* like float_classes, but will also keep windows on top */
+    overlay_classes: [
+        "discover-overlay",
+    ],
+    /* should we enable gaps by default */
+    with_gap: false,
+    custom_commands: {},
+    command_callbacks: {},
+)
+

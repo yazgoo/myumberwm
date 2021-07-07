@@ -11,4 +11,5 @@ repository = "https://github.com/yazgoo/myumberwm"
 keywords = ["wm", "x11", "terminal"]
 categories = ["gui"]
 [dependencies]
-umberwm = "0.0.25"
+umberwm = "0.0.26"
+dirs = "3.0"
