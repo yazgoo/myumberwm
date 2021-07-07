@@ -103,7 +103,46 @@
     ],
     /* should we enable gaps by default */
     with_gap: false,
-    custom_commands: {},
+    custom_commands: {
+        (
+            mod_mask: 64,
+            key: "r",
+        ): ["rofi", "-show", "run"],
+        (
+            mod_mask: 64,
+            key: "Return",
+        ): ["bash", "t"],
+        (
+            mod_mask: 64,
+            key: "s",
+        ): ["bash", "alsaterm"],
+        (
+            mod_mask: 64,
+            key: "l",
+        ): ["slock"],
+        (
+            mod_mask: 64,
+            key: "n",
+        ): ["xcalib", "-i", "-a"],
+        (
+            mod_mask: 64,
+            key: "x",
+        ): ["bash", "t"],
+        (
+            mod_mask: 64,
+            key: "x",
+        ): ["t",
+         "--class",
+         "quickmarks",
+         "--config-file",
+         "/home/yazgoo/.config/alacritty/alacritty_white.yml",
+         "-e",
+         "quickmarks"],
+        (
+            mod_mask: 64,
+            key: "m",
+        ): ["autorandr", "--change"],
+    },
     command_callbacks: {},
 )
 
