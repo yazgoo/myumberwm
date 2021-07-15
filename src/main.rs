@@ -6,7 +6,8 @@ use std::io::prelude::*;
 use std::path;
 use std::process::Command;
 use std::thread;
-use umberwm::{umberwm, Conf, EventsCallbacks, SerializableConf};
+use umberwm::model::{Conf, EventsCallbacks, SerializableConf};
+use umberwm::umberwm;
 
 fn save_local_conf() {
     let conf_str = include_str!("umberwm.ron");
