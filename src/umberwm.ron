@@ -101,6 +101,11 @@
     overlay_classes: [
         "discover-overlay",
     ],
+    sticky_classes: {
+        "discord": "i",
+        "slack": "eacute",
+        "zoom": "p",
+    },
     /* should we enable gaps by default */
     with_gap: false,
     custom_commands: {
