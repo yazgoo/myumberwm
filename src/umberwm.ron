@@ -131,6 +131,10 @@
         ): ["xcalib", "-i", "-a"],
         (
             mod_mask: 64,
+            key: "t",
+        ): ["firefox", "https://search.brave.com/"],
+(
+            mod_mask: 64,
             key: "x",
         ): ["bash", "t"],
         (
