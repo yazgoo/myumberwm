@@ -66,6 +66,7 @@
     },
     /* will ignore windows with this WM_CLASS */
     ignore_classes: [
+        "keynav",
         "xscreensaver",
         "compton",
         "xsecurelock",
@@ -117,6 +118,10 @@
             mod_mask: 64,
             key: "Return",
         ): ["bash", "t"],
+        (
+            mod_mask: 64,
+            key: "v",
+        ): ["bash", "contrastterm"],
         (
             mod_mask: 64,
             key: "s",
