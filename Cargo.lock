@@ -275,9 +275,9 @@ dependencies = [
 
 [[package]]
 name = "umberwm"
-version = "0.0.28"
+version = "0.0.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8dcdf5c256ddbf520dd2e2dc56e9f5a804f2a339fe0791bcb15beafbaa326e7c"
+checksum = "f7de89076b6007fa3af7460c499a3dcc387edb1ca814ee1f8d24c77b71dd5302"
 dependencies = [
  "anyhow",
  "dirs",

@@ -63,6 +63,14 @@
             mod_mask: 64,
             key: "f",
         ): ChangeLayout,
+        (
+            mod_mask: 64,
+            key: "j",
+        ): IncreaseQuota,
+        (
+            mod_mask: 64,
+            key: "k",
+        ): DecreaseQuota,
     },
     /* will ignore windows with this WM_CLASS */
     ignore_classes: [
