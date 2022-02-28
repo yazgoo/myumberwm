@@ -57,6 +57,14 @@
         ): SerializeAndQuit,
         (
             mod_mask: 64,
+            key: "h",
+        ): SwapPreviousWindow,
+        (
+            mod_mask: 64,
+            key: "l",
+        ): SwapNextWindow,
+        (
+            mod_mask: 64,
             key: "q",
         ): Quit,
         (
@@ -74,6 +82,7 @@
     },
     /* will ignore windows with this WM_CLASS */
     ignore_classes: [
+        "find-cursor",
         "keynav",
         "xscreensaver",
         "compton",
@@ -118,6 +127,10 @@
     /* should we enable gaps by default */
     with_gap: false,
     custom_commands: {
+        (
+            mod_mask: 64,
+            key: "c",
+        ): ["find-cursor"],
         (
             mod_mask: 64,
             key: "r",
