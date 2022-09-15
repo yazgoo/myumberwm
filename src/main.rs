@@ -6,7 +6,10 @@ use std::io::prelude::*;
 use std::path;
 use std::process::Command;
 use std::thread;
-use umberwm::model::{Conf, EventsCallbacks, SerializableConf};
+use umberwm::model::{
+    Conf, EventsCallbacks, SerializableConf, MOD_MASK_1, MOD_MASK_2, MOD_MASK_3, MOD_MASK_4,
+    MOD_MASK_5,
+};
 use umberwm::umberwm;
 
 fn save_local_conf() {
@@ -21,7 +24,9 @@ fn save_local_conf() {
 
 fn main() {
     save_local_conf();
-    let serializable = SerializableConf::load().unwrap();
+    let mut serializable = SerializableConf::load().unwrap();
+    std::fs::write("/tmp/foo", format!("MOD_MASK_5={}", MOD_MASK_5)).expect("Unable to write file");
+
     umberwm(Conf {
         serializable: serializable,
         events_callbacks: EventsCallbacks {

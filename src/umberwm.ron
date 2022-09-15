@@ -1,6 +1,6 @@
 (
     /* the main key used to detect WM events */
-    meta: 64,
+    meta: 128,
     border: (
         width: 1,
         focus_color: 9465087,
@@ -40,43 +40,43 @@
     /* mapping between key names (must be a name in xmodmap -pke) and window manager specific actions */
     wm_actions: {
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "w",
         ): CloseWindow,
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "space",
         ): SwitchWindow,
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "g",
         ): ToggleGap,
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "d",
         ): SerializeAndQuit,
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "h",
         ): SwapPreviousWindow,
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "l",
         ): SwapNextWindow,
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "q",
         ): Quit,
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "f",
         ): ChangeLayout,
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "j",
         ): IncreaseQuota,
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "k",
         ): DecreaseQuota,
     },
@@ -122,49 +122,53 @@
     sticky_classes: {
         "discord": "i",
         "slack": "eacute",
-        "zoom": "p",
+        "zoom": "o",
+        "zoom ": "o",
+        "signal": "o",
+        "qutebrowser": "u",
+        "firefox": "p",
     },
     /* should we enable gaps by default */
     with_gap: false,
     custom_commands: {
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "c",
         ): ["find-cursor"],
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "r",
         ): ["rofi", "-show", "run"],
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "Return",
         ): ["bash", "t"],
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "v",
         ): ["bash", "contrastterm"],
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "s",
         ): ["bash", "alsaterm"],
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "l",
         ): ["slock"],
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "n",
         ): ["xcalib", "-i", "-a"],
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "t",
-        ): ["firefox", "https://search.brave.com/"],
-(
-            mod_mask: 64,
+        ): ["notify-send", "test"],
+        (
+            mod_mask: 128,
             key: "x",
         ): ["bash", "t"],
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "x",
         ): ["t",
          "--class",
@@ -174,7 +178,7 @@
          "-e",
          "quickmarks"],
         (
-            mod_mask: 64,
+            mod_mask: 128,
             key: "m",
         ): ["autorandr", "--change"],
     },
